@@ -38,11 +38,11 @@
   loop: "{{ part_info.results|product(partitions)|list }}"
 - name: Mount the created partitions
   ansible.posix.mount: 
-    path: "{{ item.1.mount_point }}"
-    src: "{{ item.0.disk.dev }}{{ item.1.part_index }}"
+    path: "{{ item[1].mount_point }}"
+    src: "{{ item[0].disk.dev }}{{ item[1].part_index }}"
     fstype: ext4
     state: mounted
-  loop: "{{ part_info.results|zip(partitions)|list }}"
+  loop: "{{ part_info.results|product(partitions)|list }}"
 # - name: Verify that file ownership and mode unchanged
 #   file:
 #     path: "{{ item.mount_point }}"
