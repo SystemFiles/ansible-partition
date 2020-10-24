@@ -28,6 +28,14 @@
 - name: (DEBUG) show partition info
   debug:
     var: partition_data
+- name: (DEBUG) Get parted info
+  parted:
+    device: "{{ item.device }}"
+    state: info
+  register: part_info
+- name: (DEBUG) Show parted info resp
+  debug:
+    var: part_info
 # - name: (UNSAFE) Force file system format on all partitions
 #   shell: mkfs.ext4 "{{ item.disk.dev }}"
 #   loop: "{{ partition_data.results|list }}"
