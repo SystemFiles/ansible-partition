@@ -4,6 +4,12 @@
 - name: Import all vars from file
   include_vars:
     file: main.yml
+- name: Verify all required groups exist
+  group:
+    name: "{{ item.mount_point_group }}"
+    state: present
+  with_items:
+    - "{{ partitions }}"
 - name: Include ubuntu specific tasks
   include_tasks: "ubuntu.yml"
   when: ansible_os_family == 'Debian' or ansible_os_family == 'Ubuntu'

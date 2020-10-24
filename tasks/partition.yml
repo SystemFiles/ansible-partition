@@ -7,10 +7,16 @@
   register: disk_exists
   with_items:
     - "{{ partitions }}"
-- name: DISK FOUND STATUS
+- name: DISK ERROR
   fail:
     msg: "Disk specified is not available..."
   when: disk_exists.stat.isdir is defined and disk_exists.stat.isdir
+- name: Unmount device (disks) for partitioning
+  mount:
+    path: "{{ item.device }}"
+    state: unmounted
+  with_items:
+    - "{{ partitions }}"
 - name: Create the partitions
   parted:
       device: "{{ item.device }}"
