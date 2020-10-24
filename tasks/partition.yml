@@ -22,23 +22,20 @@
       label: gpt
       align: optimal
       state: present
-  register: partition_data
   with_items:
     - "{{ partitions }}"
-- name: (DEBUG) show partition info
-  debug:
-    var: partition_data
-- name: (DEBUG) Get parted info
+- name: Get new partition info
   parted:
-    device: /dev/sda
+    device: "{{ item }}"
     state: info
   register: part_info
+  loop: "{{ unique_devices|list }}"
 - name: (DEBUG) Show parted info resp
   debug:
     var: part_info
-# - name: (UNSAFE) Force file system format on all partitions
-#   shell: mkfs.ext4 "{{ item.disk.dev }}"
-#   loop: "{{ partition_data.results|list }}"
+- name: (UNSAFE) Force file system format on all partitions
+  shell: mkfs.ext4 "{{ item[0].disk.dev }}{{ item[1] }}.*:ALL"
+  loop: "{{ part_info.results|produce(partition_index)|list }}"
 # - name: Mount the created partitions
 #   mount: 
 #     path: "{{ item.1.mount_point }}"
