@@ -9,7 +9,7 @@
   apt:
     name: parted
     state: present
-- name: Verify mount points exist (UNSAFE)
+- name: Verify mount points exist
   file:
     path: "{{ item.mount_point }}"
     owner: "{{ item.mount_point_user }}"

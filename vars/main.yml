@@ -2,5 +2,5 @@
 # vars file for ansible-partition
 
 partitions:
-  - { device: "/dev/sda", mount_point: "/media/nas_storage", mount_point_group: "fileadmin", mount_point_user: "ben", mount_point_mode: "0770", part_start: "0%", part_end: "49%", number: 1 }
+  - { device: "/dev/sda", mount_point: "/media/nas_storage", mount_point_group: "ben", mount_point_user: "ben", mount_point_mode: "0770", part_start: "1%", part_end: "50%", number: 1 }
   - { device: "/dev/sda", mount_point: "/media/plex_storage", mount_point_group: "plex", mount_point_user: "plex", mount_point_mode: "0775", part_start: "50%", part_end: "100%", number: 1 }

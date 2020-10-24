@@ -4,33 +4,47 @@
 - name: Verify there is the required disks available
   stat:
     path: "{{ item.device }}"
-  register: disk_exists
   with_items:
     - "{{ partitions }}"
-- name: DISK ERROR
-  fail:
-    msg: "Disk specified is not available..."
-  when: disk_exists.stat.isdir is defined and disk_exists.stat.isdir
 - name: Unmount device (disks) for partitioning
   mount:
     path: "{{ item.device }}"
     state: unmounted
   with_items:
     - "{{ partitions }}"
-- name: Create the partitions
+- name: Create the partitions as defined
   parted:
-      device: "{{ item.device }}"
+      device:  "{{ item.device }}"
+      number: "{{ item.number }}"
       part_start: "{{ item.part_start }}"
       part_end: "{{ item.part_end }}"
-      number: "{{ item.number }}"
+      part_type: primary
+      label: gpt
+      align: optimal
       state: present
   register: partition_data
   with_items:
     - "{{ partitions }}"
-- name: Mount the created partitions
-  mount: 
-    path: "{{ item.1.mount_point }}"
-    src: "{{ item.0.disk.dev }}"
-    fstype: ext4
-    state: mounted
-  loop: "{{ partition_data.results|zip(partitions)|list }}"
+- name: (DEBUG) show partition info
+  debug:
+    var: partition_data
+# - name: (UNSAFE) Force file system format on all partitions
+#   shell: mkfs.ext4 "{{ item.disk.dev }}"
+#   loop: "{{ partition_data.results|list }}"
+# - name: Mount the created partitions
+#   mount: 
+#     path: "{{ item.1.mount_point }}"
+#     src: "{{ item.0.disk.dev }}"
+#     fstype: ext4
+#     state: mounted
+#   loop: "{{ partition_data.results|zip(partitions)|list }}"
+# - name: Verify that file ownership and mode unchanged
+#   file:
+#     path: "{{ item.mount_point }}"
+#     owner: "{{ item.mount_point_user }}"
+#     group: "{{ item.mount_point_group }}"
+#     mode: "{{ item.mount_point_mode }}"
+#     state: directory
+#     recurse: true
+#   with_items:
+#     - "{{ partitions }}"
