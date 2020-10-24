@@ -31,6 +31,6 @@
   mount: 
     path: "{{ item.1.mount_point }}"
     src: "{{ item.0.disk.dev }}"
-    fstype: exfat
+    fstype: ext4
     state: mounted
   loop: "{{ partition_data.results|zip(partitions)|list }}"
