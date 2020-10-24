@@ -1,46 +1,38 @@
-# Project Title
+Role Name
+=========
 
-## Table of Contents
+A brief description of the role goes here.
 
-- [About](#about)
-- [Getting Started](#getting_started)
-- [Usage](#usage)
-- [Contributing](../CONTRIBUTING.md)
+Requirements
+------------
 
-## About <a name = "about"></a>
+Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
 
-Write about 1-2 paragraphs describing the purpose of your project.
+Role Variables
+--------------
 
-## Getting Started <a name = "getting_started"></a>
+A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
+Dependencies
+------------
 
-### Prerequisites
+A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
 
-What things you need to install the software and how to install them.
+Example Playbook
+----------------
 
-```
-Give examples
-```
+Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-### Installing
+    - hosts: servers
+      roles:
+         - { role: username.rolename, x: 42 }
 
-A step by step series of examples that tell you how to get a development env running.
+License
+-------
 
-Say what the step will be
+BSD
 
-```
-Give the example
-```
+Author Information
+------------------
 
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo.
-
-## Usage <a name = "usage"></a>
-
-Add notes about how to use the system.
+An optional section for the role authors to include contact information, or a website (HTML is not allowed).

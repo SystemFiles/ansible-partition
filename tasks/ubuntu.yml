@@ -1,0 +1,21 @@
+---
+# Configure partitions on Ubuntu
+
+- name: Verify that all packages are up-to-date
+  apt:
+    name: '*'
+    state: latest
+- name: Verify that parted is installed
+  apt:
+    name: parted
+    state: present
+- name: Verify mount points exist (UNSAFE)
+  file:
+    path: "{{ item.mount_point }}"
+    owner: "{{ item.mount_point_user }}"
+    group: "{{ item.mount_point_group }}"
+    mode: "{{ item.mount_point_mode }}"
+    state: directory
+    recurse: true
+- name: Include partitions tasks
+  include_tasks: "partition.yml"

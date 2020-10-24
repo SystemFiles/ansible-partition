@@ -1,0 +1,9 @@
+---
+# tasks file for ansible-partition
+
+- name: Import all vars from file
+  include_vars:
+    file: main.yml
+- name: Include ubuntu specific tasks
+  include_tasks: "ubuntu.yml"
+  when: ansible_os_family == 'Debian' or ansible_os_family == 'Ubuntu'

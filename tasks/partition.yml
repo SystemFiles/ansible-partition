@@ -1,0 +1,30 @@
+---
+# Create and modify the partitions
+
+- name: Verify there is the required disks available
+  stat:
+    path: "{{ item.device }}"
+  register: disk_exists
+  with_items:
+    - "{{ partitions }}"
+- name: DISK FOUND STATUS
+  fail:
+    msg: "Disk specified is not available..."
+  when: disk_exists.stat.isdir is defined and disk_exists.stat.isdir
+- name: Create the partitions
+  parted:
+      device: "{{ item.device }}"
+      part_start: "{{ item.part_start }}"
+      part_end: "{{ item.part_end }}"
+      number: "{{ item.number }}"
+      state: present
+  register: partition_data
+  with_items:
+    - "{{ partitions }}"
+- name: Mount the created partitions
+  mount: 
+    path: "{{ item.1.mount_point }}"
+    src: "{{ item.0.disk.dev }}"
+    fstype: exfat
+    state: mounted
+  loop: "{{ partition_data.results|zip(partitions)|list }}"
