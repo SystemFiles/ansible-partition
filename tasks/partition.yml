@@ -42,7 +42,7 @@
     src: "{{ item.0.disk.dev }}"
     fstype: ext4
     state: mounted
-  loop: "{{ partition_data.results|zip(partitions)|list }}"
+  loop: "{{ part_info.results|zip(partitions)|list }}"
 # - name: Verify that file ownership and mode unchanged
 #   file:
 #     path: "{{ item.mount_point }}"
