@@ -30,7 +30,7 @@
     var: partition_data
 - name: (DEBUG) Get parted info
   parted:
-    device: "{{ item.device }}"
+    device: /dev/sda
     state: info
   register: part_info
 - name: (DEBUG) Show parted info resp
