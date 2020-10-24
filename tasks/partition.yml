@@ -41,7 +41,7 @@
     path: "{{ item.1.mount_point }}"
     src: "{{ item.0.disk.dev }}"
     fstype: ext4
-    state: present
+    state: mounted
   loop: "{{ part_info.results|zip(partitions)|list }}"
 # - name: Verify that file ownership and mode unchanged
 #   file:
